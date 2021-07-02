@@ -20,12 +20,46 @@ const pagBtnUL = document.createElement('ul');
 const pagDiv = document.createElement('div');
 pagDiv.className = 'pagination';
 
+console.log(studentListUl);
+console.log(studentItemLi);
 
 /*
 Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
 const showPage = (list, page) => {   
+   //Create first and last student variables with math calculation
+   let firstIndex = (page * itemsPerPage) - itemsPerPage;
+   let lastIndex = page * itemsPerPage; 
+   //Set student list UL to empty string to remove students prev displayed
+   studentListUl.innerHTML = '';
+
+   //For loop to go through each student entry once
+   for (let i = 0; i < list.length; i++) {
+      //Conditional statement to check if current position should be displayed
+      if (i >= firstIndex && i < lastIndex) {
+         //If so then make student list Ul's innerHTML property display the student at that index position
+         studentListUl.insertAdjacentHTML('beforeend',
+         //Template literal of DOM elements for the student, using bracket notation to access object, dot notation for properties
+         `<li class="student-item cf">
+               <div class="student-details">
+                  <img class="avatar" src="${list[i].picture.large}" alt="Profile Picture">  
+                  <h3>${list[i].name.first} ${list[i].name.last}</h3>
+                  <span class="email">${list[i].email}</span>
+               </div>
+               <div class="joined-details">
+                  <span class="date">Joined ${list[i].registered.date}</span>
+               </div>
+         </li>`);
+      }
+   }
+}
+
+//test showPage function is working
+showPage(data, 1);
+
+
+/*const showPage = (list, page) => {   
    //Create first and last student variables with math calculation
    let firstIndex = (page * itemsPerPage) - itemsPerPage;
    let lastIndex = page * itemsPerPage; 
@@ -44,23 +78,8 @@ const showPage = (list, page) => {
       }
    }
 }
-
-/*or instead using a template literal:    
-
-//If so, make studentlistUl's innerHTML prop display student at that index position
-         studentListUl.insertAdjacentHTML('beforeend',
-         //Template literal of DOM elements for student, using bracket notation to access object, dot notation for props
-         `<li class="student-item cf">
-            <div class="student-details">
-               <img class="avatar" src="${list[i].picture.large}" alt="Profile Picture">  
-               <h3>${list[i].name.first} ${list[i].name.last}</h3>
-               <span class="email">${list[i].email}</span>
-            </div>
-            <div class="joined-details">
-               <span class="date">Joined ${list[i].registered.date}</span>
-            </div>
-         </li>`);
 */
+
 
 /*
 Create the `addPagination` function
@@ -99,10 +118,13 @@ const addPagination = list => {
          //add active class to clicked button
          e.target.className.add('active');
          //call showPage func with arguments
-         showPage(data, 1);
+         showPage(list, 1);
       }
    });
 }
+
+
+/*
 
 //*****Extra credits attempt****** 
 //Search form
@@ -162,23 +184,36 @@ const searchStudents = list => {
            addPagination(results);
         }
      }
+
+   //Event listener for typing in search box, run search function (does not work with preventdefault)
+   searchInput.addEventListener('keyup', () => {
+      searchStudents(data);
+   });
+
+   //Event listener for clicking on button, run search function
+   searchBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      searchStudents(data);
+   });
 }
 
-//Event listener for typing in search box, run search function (does not work with preventdefault)
-searchInput.addEventListener('keyup', () => {
-   searchStudents(data);
-});
-
-//Event listener for clicking on button, run search function
-searchBtn.addEventListener('click', (event) => {
-   event.preventDefault();
-   searchStudents(data);
-});
+*/
 
 
 //Call all functions
-appendSearchForm();
+//appendSearchForm();
 showPage(data, 1);
 addPagination(data);
+
+
+
+
+
+
+
+
+
+
+
 
 
