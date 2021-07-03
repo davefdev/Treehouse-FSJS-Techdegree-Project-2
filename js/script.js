@@ -124,8 +124,6 @@ const addPagination = list => {
 }
 
 
-/*
-
 //*****Extra credits attempt****** 
 //Search form
 //Create and append search bar with button
@@ -197,15 +195,10 @@ const searchStudents = list => {
    });
 }
 
-*/
-
-
 //Call all functions
 //appendSearchForm();
 showPage(data, 1);
 addPagination(data);
-
-
 
 
 
