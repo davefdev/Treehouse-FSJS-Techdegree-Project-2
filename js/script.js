@@ -99,7 +99,7 @@ const addPagination = list => {
       //method to add template literal of DOM elements for button, after last child of linkList
       linkList.insertAdjacentHTML('beforeend',
          `<li>
-            <button type="button">${i}</button>
+         <button data-page="${i}" type="button">${i}</button>
          </li>`
       );   
    }
@@ -110,18 +110,26 @@ const addPagination = list => {
 
    //create an event listener on the page buttons 
    linkList.addEventListener('click', (e) => {
-        //check to ensure the element clicked is a button using if statement
-        if (e.target.tagName === 'BUTTON') {
-         //remove active class from prev button
-         let prevButton = document.querySelector('.active');
-         prevButton.className = '';
-         //add active class to clicked button
-         e.target.className.add('active');
+     
+      //assigns the target of the event to btn variable 
+      const btn = e.target
 
-         let btnNum = e.target.textContent;
-         //call showPage func with arguments
-         showPage(list, btnNum);
+      //check to ensure element clicked is a button using if statement, return early if not
+      if (btn.tagName !== 'BUTTON') {
+         return
       }
+      //remove active class from prev button
+      let prevButton = document.querySelector('.active');
+      prevButton.classList.remove('active');
+   
+      //add active class to clicked button
+      btn.classList.add('active');
+   
+      //accesss the btn's page
+      const page = btn.dataset.page;
+
+      //call showPage func with arguments
+      showPage(list, page);
    });
 }
 
