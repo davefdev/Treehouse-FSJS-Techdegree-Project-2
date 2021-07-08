@@ -157,6 +157,7 @@ const searchStudents = (list, searchInput) => {
    //if no search input then display all the data
    if (!inputText) {
       showPage(data, 1);
+      addPagination(list);
       //return early
       return
    }
