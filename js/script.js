@@ -66,7 +66,7 @@ This function will create and insert/append the elements needed for the paginati
  
 const addPagination = list => {
    //Var to store no of pag buttons, using Math.ceil and list par length divided by no of items per page
-   const numOfBtns= Math.ceil(list.length/itemsPerPage);
+   const numOfBtns = Math.ceil(list.length/itemsPerPage);
    //var to add the pag buttons to
    const linkList = document.querySelector('.link-list');
    //remove any prev buttons
@@ -82,8 +82,8 @@ const addPagination = list => {
       );   
    }
  
-   //select first button element and set it's class to active
-   const button = document.querySelector('button');
+   //select first button element of the linklist (not page) and set it's class to active
+   const button = linkList.querySelector('button');
    button.className = 'active';
  
    //create an event listener on the page buttons 
@@ -149,6 +149,7 @@ const searchStudents = (list, searchInput) => {
    if (noResults) {
       noResults.parentElement.removeChild(noResults);
       noResults = null;
+      addPagination(list);
    }
  
    const inputText = searchInput.value.toUpperCase();
